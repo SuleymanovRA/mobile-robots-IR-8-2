@@ -12,23 +12,23 @@ decode_results results;
 unsigned long _time;
 /////////////
 // Опишем коды кнопок макроподстановками:
-#define FORWARD 0x511DBB
-#define LEFT  0x52A3D41F
-#define RIGHT 0x20FE4DBB
-#define STOP  0xD7E84B1B
-#define BACKWARD  0xA3C8EDDB
-#define FORWARDLEFT 0xC101E57B
-#define FORWARD2  0x97483BFB
-#define FORWARDRIGHT  0xF0C41643
-#define LEFT2 0x9716BE3F
-#define STOP2 0x3D9AE3F7
-#define RIGHT2  0x6182021B
-#define BACKWARDLEFT 0x8C22657B
-#define BACKWARD2 0x488F3CBB
-#define BACKWARDRIGHT 0x449E79F
-#define STOP3 0x1BC0157B
-#define STOP4 0x32C6FDF7
-#define STOP5 0x3EC3FC1B
+#define FORWARD 0x3D9AE3F7
+#define LEFT  0x8C22657B
+#define RIGHT 0x449E79F
+#define STOP  0x488F3CBB
+#define BACKWARD  0x1BC0157B
+#define FORWARDLEFT 0xE318261B
+#define FORWARD2  0x511DBB
+#define FORWARDRIGHT  0xEE886D7F
+#define LEFT2 0x52A3D41F
+#define STOP2 0xD7E84B1B
+#define RIGHT2  0x20FE4DBB
+#define BACKWARDLEFT 0xF076C13B
+#define BACKWARD2 0xA3C8EDDB
+#define BACKWARDRIGHT 0xE5CFBD7F
+#define STOP3 0x97483BFB
+#define STOP4 0xC101E57B
+#define STOP5 0xF0C41643
 //Инициализация.
 void setup()
 {
@@ -45,37 +45,26 @@ void loop()
 {
   if (irrecv.decode(&results))
   {
+    unsigned long val = results.value;
     _time = millis();
-    switch (results.value) {
+    switch (val) {
       // Вперед
       case FORWARD:
-        forward();
-        break;
-      // Назад
-      case BACKWARD:
-        backward();
-        break;
-      // Влево
-      case LEFT:
-        left();
-        break;
-      // Вправо
-      case RIGHT:
-        right();
-        break;
-        // Вперед
       case FORWARD2:
         forward();
         break;
       // Назад
+      case BACKWARD:
       case BACKWARD2:
         backward();
         break;
       // Влево
+      case LEFT:
       case LEFT2:
         left();
         break;
       // Вправо
+      case RIGHT:
       case RIGHT2:
         right();
         break;
@@ -97,17 +86,9 @@ void loop()
         break;
       // Стоп
       case STOP:
-        _stop();
-       break;
       case STOP2:
-        _stop();
-       break;
       case STOP3:
-        _stop();
-       break;
       case STOP4:
-        _stop();
-       break;
       case STOP5:
         _stop();
        break;
@@ -117,5 +98,3 @@ void loop()
   //Если никакая клавиша не нажата более 0.3сек., то остановка.
   if((millis()-_time)>300) {_stop();}
 }//=====================================================================
-
-
